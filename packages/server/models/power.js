@@ -2,7 +2,12 @@
 const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Power extends Model {
-    static associate (models) {}
+    static associate (models) {
+      Power.belongsToMany(models.Hero, {
+        through: models.HeroPowers,
+        foreignKey: { name: 'powerId' },
+      });
+    }
   }
   Power.init(
     {
