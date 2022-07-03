@@ -4,6 +4,8 @@ const router = require('./router');
 
 const app = express();
 
+app.use(express.static());
+
 app.use(express.json());
 
 app.use('/api', router);
