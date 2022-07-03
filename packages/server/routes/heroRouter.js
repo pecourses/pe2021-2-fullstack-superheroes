@@ -1,11 +1,12 @@
 const { Router } = require('express');
 const { heroController } = require('../controllers');
+const { uploadFile } = require('../middleware');
 
 const heroRouter = Router();
 
 heroRouter
   .route('/')
-  .post(heroController.createHero)
+  .post(uploadFile.uploadHeroPhoto, heroController.createHero)
   .get(heroController.getHeroes);
 
 heroRouter
