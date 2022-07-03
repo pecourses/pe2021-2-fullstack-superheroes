@@ -13,28 +13,28 @@ module.exports = {
         allowNull: false,
         unique: true,
       },
-      realName: {
+      real_name: {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      originDescription: {
+      origin_description: {
         type: Sequelize.STRING,
       },
-      catchPhrase: {
+      catch_phrase: {
         type: Sequelize.STRING,
       },
       image: {
         type: Sequelize.STRING,
       },
-      isGood: {
+      is_good: {
         type: Sequelize.BOOLEAN,
         defaultValue: true,
       },
-      createdAt: {
+      created_at: {
         allowNull: false,
         type: Sequelize.DATE,
       },
-      updatedAt: {
+      updated_at: {
         allowNull: false,
         type: Sequelize.DATE,
       },

@@ -13,14 +13,14 @@ module.exports = {
         allowNull: false,
         unique: true,
       },
-      fullDescription: {
+      full_description: {
         type: Sequelize.STRING,
       },
-      createdAt: {
+      created_at: {
         allowNull: false,
         type: Sequelize.DATE,
       },
-      updatedAt: {
+      updated_at: {
         allowNull: false,
         type: Sequelize.DATE,
       },
