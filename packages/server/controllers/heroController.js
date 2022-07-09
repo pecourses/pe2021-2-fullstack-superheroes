@@ -1,5 +1,5 @@
 const _ = require('lodash');
-const { Hero, sequelize } = require('./../models');
+const { Hero, Power, sequelize } = require('./../models');
 
 module.exports.createHero = async (req, res, next) => {
   const { body, file } = req;
@@ -25,7 +25,39 @@ module.exports.createHero = async (req, res, next) => {
   }
 };
 
-module.exports.getHeroes = async (req, res, next) => {};
+module.exports.getHeroes = async (req, res, next) => {
+  const { limit = 10, offset = 0 } = req.query;
+
+  try {
+    const foundHeroes = await Hero.findAll({
+      raw: true,
+      attributes: { exclude: ['createdAt', 'updatedAt'] },
+      limit,
+      offset,
+      include: {
+        model: Power,
+        attributes: {
+          exclude: ['description', 'fullDescription', 'createdAt', 'updatedAt'],
+        },
+        through: { attributes: [] },
+      },
+    });
+
+    const singleFoundHeroes = {};
+    foundHeroes.forEach(i => {
+      singleHeroes[i.id] = i;
+      singleHeroes[i.id].superpowers = [];
+    });
+    foundHeroes.forEach(i => {
+      singleHeroes[i.id].superpowers.push(i['Powers.id']);
+      delete i['Powers.id'];
+    });
+
+    res.status(200).send({ data: Object.values(singleFoundHeroes) });
+  } catch (err) {
+    next(err);
+  }
+};
 
 module.exports.getHeroById = async (req, res, next) => {
   res.status(501).send('Not Implemented');
