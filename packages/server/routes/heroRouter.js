@@ -6,7 +6,7 @@ const heroRouter = Router();
 
 heroRouter
   .route('/')
-  .post(uploadFile.uploadHeroPhoto, heroController.createHero)
+  .post(/*uploadFile.uploadHeroPhoto, */ heroController.createHero)
   .get(heroController.getHeroes);
 
 heroRouter

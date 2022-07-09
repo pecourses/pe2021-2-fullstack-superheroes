@@ -29,14 +29,14 @@ module.exports.createHero = async (req, res, next) => {
 };
 
 module.exports.getHeroes = async (req, res, next) => {
-  const { limit = 10, offset = 0 } = req.query;
+  // const { limit = 10, offset = 0 } = req.query;
 
   try {
     const foundHeroes = await Hero.findAll({
       raw: true,
       attributes: { exclude: ['createdAt', 'updatedAt'] },
-      limit,
-      offset,
+      // limit,
+      // offset,
       include: {
         model: Power,
         attributes: {
