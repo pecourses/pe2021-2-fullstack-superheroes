@@ -7,6 +7,9 @@ module.exports.createHero = async (req, res, next) => {
   if (file) {
     body.image = file.filename;
   }
+  if (!body.superpowers) {
+    body.superpowers = [];
+  }
 
   const t = await sequelize.transaction();
   try {
@@ -49,7 +52,8 @@ module.exports.getHeroes = async (req, res, next) => {
       singleFoundHeroes[i.id].superpowers = [];
     });
     foundHeroes.forEach(i => {
-      singleFoundHeroes[i.id].superpowers.push(i['Powers.id']);
+      i['Powers.id'] &&
+        singleFoundHeroes[i.id].superpowers.push(i['Powers.id']);
       delete i['Powers.id'];
     });
 

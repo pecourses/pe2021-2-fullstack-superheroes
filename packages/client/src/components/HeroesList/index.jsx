@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import defaultHeroImage from './defaultHeroImage.png';
 
 const axiosInstance = axios.create({ baseURL: 'http://localhost:5000/api' });
 
 function HeroesList () {
   const [heroes, setHeroes] = useState([]);
   const [powers, setPowers] = useState([]);
-  // подгрузить силы
 
   useEffect(() => {
     axiosInstance
@@ -38,20 +38,19 @@ function HeroesList () {
       <input type='checkbox' checked={isGood} onChange={() => {}} />
       <img
         style={{ width: '100px', height: '100px', objectFit: 'cover' }}
-        src={
-          image
-            ? `http://localhost:5000/images/${image}`
-            : './defaultHeroImage.png'
-        }
+        src={image ? `http://localhost:5000/images/${image}` : defaultHeroImage}
         alt={nickname}
       />
       {nickname} {realName}
       <p>{originDescription}</p>
       <p>{catchPhrase}</p>
       <ol>
-        {superpowers.map(p => (
-          <li>{powers[powers.findIndex(i => p === i.id)].description}</li>
-        ))}
+        {powers.length &&
+          superpowers.map(p => (
+            <li key={p}>
+              {powers[powers.findIndex(i => p === i.id)].description}
+            </li>
+          ))}
       </ol>
     </li>
   );
