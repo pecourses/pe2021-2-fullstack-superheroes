@@ -1,31 +1,31 @@
-const { Hero } = require('./../models');
+const _ = require('lodash');
+const { Hero, sequelize } = require('./../models');
 
 module.exports.createHero = async (req, res, next) => {
   const { body, file } = req;
 
-  body.image = file.filename;
-  const powers = body.superpowers
-    .split('')
-    .filter(s => s !== '[' && s !== ']')
-    .join('')
-    .split(',')
-    .map(i => Number(i));
+  if (file) {
+    body.image = file.filename;
+  }
 
+  const t = await sequelize.transaction();
   try {
-    // добавить основную инфу в супергерои
-    const createdHero = await Hero.create(body);
-    // добавить инфу о суперсилах созданного героя в таблицу связи
-    const createdHeroPowers = await createdHero.setPowers(powers);
-    // console.log('createdHeroPowers', createdHeroPowers);
-    rss.stsatus(501).send('Not Implemented');
+    const createdHero = await Hero.create(body, { transaction: t });
+    const createdHeroPowers = await createdHero.setPowers(body.superpowers, {
+      transaction: t,
+    });
+    t.commit();
+    const preparedHero = _.omit(createdHero.get(), ['createdAt', 'updatedAt']);
+
+    preparedHero.superpowers = body.superpowers;
+    res.status(200).send(preparedHero);
   } catch (err) {
+    t.rollback();
     next(err);
   }
 };
 
-module.exports.getHeroes = async (req, res, next) => {
-  res.status(501).send('Not Implemented');
-};
+module.exports.getHeroes = async (req, res, next) => {};
 
 module.exports.getHeroById = async (req, res, next) => {
   res.status(501).send('Not Implemented');
