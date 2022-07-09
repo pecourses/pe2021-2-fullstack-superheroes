@@ -45,11 +45,11 @@ module.exports.getHeroes = async (req, res, next) => {
 
     const singleFoundHeroes = {};
     foundHeroes.forEach(i => {
-      singleHeroes[i.id] = i;
-      singleHeroes[i.id].superpowers = [];
+      singleFoundHeroes[i.id] = i;
+      singleFoundHeroes[i.id].superpowers = [];
     });
     foundHeroes.forEach(i => {
-      singleHeroes[i.id].superpowers.push(i['Powers.id']);
+      singleFoundHeroes[i.id].superpowers.push(i['Powers.id']);
       delete i['Powers.id'];
     });
 
