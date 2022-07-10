@@ -12,8 +12,11 @@ function HeroesList ({
 }) {
   useEffect(() => {
     getPowers();
+  }, []);
+
+  useEffect(() => {
     getHeroes();
-  });
+  }, [heroes.length]);
 
   const mapHeroes = ({
     id,
