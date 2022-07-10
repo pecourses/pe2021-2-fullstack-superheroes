@@ -15,9 +15,33 @@ const HeroForm = ({ createHero, powers }) => {
   };
 
   const handleSubmit = (values, formikBag) => {
-    //
-    createHero(values);
+    // values => Application/json
+    // createHero(values);
+
+    // c files => multipart/form-data
+    const formData = new FormData();
+    // multer: formData(text) => req.body
+    formData.append('nickname', values.nickname);
+    formData.append('realName', values.realName);
+    formData.append('catchPhrase', values.catchPhrase);
+    formData.append('originDescription', values.originDescription);
+    formData.append('isGood', values.isGood);
+    values.superpowers.forEach(s => formData.append('superpowers', s));
+    // multer: formData(file) => req.file
+    formData.append('heroPhoto', values.heroPhoto);
+    createHero(formData);
+
     formikBag.resetForm();
+  };
+  const mapPowers = p => (
+    <label key={p.id}>
+      <Field type='checkbox' name='superpowers' value={String(p.id)} />
+      <span>{p.description}</span>
+    </label>
+  );
+
+  const setHeroPhoto = ({ target: { files } }, setPhoto) => {
+    setPhoto('heroPhoto', files[0]);
   };
 
   return (
@@ -47,6 +71,19 @@ const HeroForm = ({ createHero, powers }) => {
           <label>
             <Field type='checkbox' name='isGood' />
             <span>Is positiv hero</span>
+          </label>
+          <br />
+          {powers.map(mapPowers)}
+          <br />
+          <label>
+            <span>HeroPhoto</span>
+            <input
+              type='file'
+              name='heroPhoto'
+              onChange={e => {
+                setHeroPhoto(e, formikProps.setFieldValue);
+              }}
+            />
           </label>
           <br />
           <button type='submit'>Send</button>

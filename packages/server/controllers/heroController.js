@@ -20,8 +20,8 @@ module.exports.createHero = async (req, res, next) => {
     t.commit();
     const preparedHero = _.omit(createdHero.get(), ['createdAt', 'updatedAt']);
 
-    preparedHero.superpowers = body.superpowers;
-    res.status(200).send(preparedHero);
+    preparedHero.superpowers = body.superpowers.map(s => Number(s));
+    res.status(200).send({ data: preparedHero });
   } catch (err) {
     t.rollback();
     next(err);
