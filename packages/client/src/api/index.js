@@ -2,12 +2,9 @@ import axios from 'axios';
 
 const http = axios.create({ baseURL: 'http://localhost:5000/api' });
 
-// http
-//   .get('/heroes')
-//   .then(response => console.log('response', response))
-//   .catch(err => console.log('err', err));
+export const getPowers = () => http.get('/powers');
 
-// http
-//   .post('/heroes',{nickname:'bla-bla', ...})
-//   .then(response => console.log('response', response))
-//   .catch(err => console.log('err', err));
+export const getHeroes = () => http.get('/heroes');
+
+// data => req.body
+export const createHero = data => http.post('/heroes', data);
