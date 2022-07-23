@@ -93,5 +93,22 @@ module.exports.updateHero = async (req, res, next) => {
 };
 
 module.exports.deleteHero = async (req, res, next) => {
-  res.status(501).send('Not Implemented');
+  const {
+    params: { heroId },
+  } = req;
+  console.log('heroId', heroId);
+  try {
+    const deletedHeroCount = await Hero.destroy({
+      where: {
+        id: heroId,
+      },
+    });
+
+    if (deletedHeroCount) {
+      return res.status(204).send();
+    }
+    next(createError(404, 'Hero Not Found'));
+  } catch (err) {
+    next(err);
+  }
 };

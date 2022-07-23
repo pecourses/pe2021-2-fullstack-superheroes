@@ -15,3 +15,5 @@ export const createHero = data => http.post('/heroes', data);
 
 export const updateHero = ({ id, values }) =>
   http.patch(`/heroes/${id}`, values);
+
+export const deleteHero = id => http.delete(`/heroes/${id}`);

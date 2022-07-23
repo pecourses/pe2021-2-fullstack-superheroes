@@ -16,3 +16,9 @@ Content-Type: application/json
 {
   "isGood": true
 }
+
+### delete 200
+DELETE http://localhost:5000/api/heroes/106
+
+### delete 404
+DELETE http://localhost:5000/api/heroes/500

@@ -3,6 +3,9 @@ import {
   createHeroError,
   createHeroRequest,
   createHeroSuccess,
+  deleteHeroError,
+  deleteHeroRequest,
+  deleteHeroSuccess,
   getHeroesError,
   getHeroesRequest,
   getHeroesSuccess,
@@ -45,5 +48,15 @@ export function * updateHeroSaga (values) {
     yield put(updateHeroSuccess(data));
   } catch (err) {
     yield put(updateHeroError(err));
+  }
+}
+
+export function * deleteHeroSaga ({ id }) {
+  yield put(deleteHeroRequest());
+  try {
+    yield api.deleteHero(id);
+    yield put(deleteHeroSuccess(id));
+  } catch (err) {
+    yield put(deleteHeroError(err));
   }
 }

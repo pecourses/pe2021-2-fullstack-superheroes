@@ -74,3 +74,22 @@ export const updateHeroError = err => ({
   type: ACTION_TYPES.UPDATE_HERO_ERROR,
   err,
 });
+
+export const deleteHeroAction = id => ({
+  type: ACTION_TYPES.DELETE_HERO_ACTION,
+  id,
+});
+
+export const deleteHeroRequest = () => ({
+  type: ACTION_TYPES.DELETE_HERO_REQUEST,
+});
+
+export const deleteHeroSuccess = id => ({
+  type: ACTION_TYPES.DELETE_HERO_SUCCESS,
+  id,
+});
+
+export const deleteHeroError = err => ({
+  type: ACTION_TYPES.DELETE_HERO_ERROR,
+  err,
+});

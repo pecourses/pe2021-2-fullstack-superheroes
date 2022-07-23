@@ -11,7 +11,8 @@ const heroesReducer = (state = initialState, action) => {
   switch (type) {
     case ACTION_TYPES.CREATE_HERO_REQUEST:
     case ACTION_TYPES.GET_HEROES_REQUEST:
-    case ACTION_TYPES.UPDATE_HERO_REQUEST: {
+    case ACTION_TYPES.UPDATE_HERO_REQUEST:
+    case ACTION_TYPES.DELETE_HERO_REQUEST: {
       return { ...state, isFetching: true, error: null };
     }
     case ACTION_TYPES.CREATE_HERO_SUCCESS: {
@@ -33,9 +34,21 @@ const heroesReducer = (state = initialState, action) => {
       newHeroes[updatedHeroIndex] = { ...newHeroes[updatedHeroIndex], ...data };
       return { ...state, isFetching: false, heroes: newHeroes };
     }
+    case ACTION_TYPES.DELETE_HERO_SUCCESS: {
+      const { id } = action;
+      const { heroes } = state;
+
+      const newHeroes = [...heroes];
+      newHeroes.splice(
+        newHeroes.findIndex(h => h.id === id),
+        1
+      );
+      return { ...state, isFetching: false, heroes: newHeroes };
+    }
     case ACTION_TYPES.CREATE_HERO_ERROR:
     case ACTION_TYPES.GET_HEROES_ERROR:
-    case ACTION_TYPES.UPDATE_HERO_ERROR: {
+    case ACTION_TYPES.UPDATE_HERO_ERROR:
+    case ACTION_TYPES.DELETE_HERO_ERROR: {
       const { err } = action;
       return { ...state, isFetching: false, error: err };
     }

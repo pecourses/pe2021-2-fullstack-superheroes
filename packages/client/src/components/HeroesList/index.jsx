@@ -6,6 +6,7 @@ import {
   getPowersAction,
   getHeroesAction,
   updateHeroAction,
+  deleteHeroAction,
 } from '../../actions/actionCreators';
 
 function HeroesList ({
@@ -14,6 +15,7 @@ function HeroesList ({
   getPowers,
   getHeroes,
   updateHero,
+  deleteHero,
 }) {
   useEffect(() => {
     getPowers();
@@ -39,6 +41,7 @@ function HeroesList ({
         checked={isGood}
         onChange={() => updateHero(id, { isGood: !isGood })}
       />
+      <button onClick={() => deleteHero(id)}>X</button>
       <img
         style={{ width: '100px', height: '100px', objectFit: 'cover' }}
         src={image ? `http://localhost:5000/images/${image}` : defaultHeroImage}
@@ -76,6 +79,7 @@ const mapDispatchToProps = dispatch => ({
   getPowers: () => dispatch(getPowersAction()),
   getHeroes: () => dispatch(getHeroesAction()),
   updateHero: (id, values) => dispatch(updateHeroAction(id, values)),
+  deleteHero: id => dispatch(deleteHeroAction(id)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(HeroesList);
