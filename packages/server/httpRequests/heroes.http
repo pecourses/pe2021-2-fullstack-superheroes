@@ -1,0 +1,18 @@
+### get all 200
+GET http://localhost:5000/api/heroes
+
+### patch 200
+PATCH http://localhost:5000/api/heroes/102
+Content-Type: application/json
+
+{
+  "isGood": false
+}
+
+### patch 404
+PATCH http://localhost:5000/api/heroes/500
+Content-Type: application/json
+
+{
+  "isGood": true
+}

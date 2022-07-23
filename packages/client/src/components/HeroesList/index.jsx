@@ -2,13 +2,18 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { useEffect } from 'react';
 import defaultHeroImage from './defaultHeroImage.png';
-import { getPowersAction, getHeroesAction } from '../../actions/actionCreators';
+import {
+  getPowersAction,
+  getHeroesAction,
+  updateHeroAction,
+} from '../../actions/actionCreators';
 
 function HeroesList ({
   powersData: { powers },
   heroesData: { isFetching, error, heroes },
   getPowers,
   getHeroes,
+  updateHero,
 }) {
   useEffect(() => {
     getPowers();
@@ -29,7 +34,11 @@ function HeroesList ({
     isGood,
   }) => (
     <li key={id}>
-      <input type='checkbox' checked={isGood} onChange={() => {}} />
+      <input
+        type='checkbox'
+        checked={isGood}
+        onChange={() => updateHero(id, { isGood: !isGood })}
+      />
       <img
         style={{ width: '100px', height: '100px', objectFit: 'cover' }}
         src={image ? `http://localhost:5000/images/${image}` : defaultHeroImage}
@@ -66,6 +75,7 @@ const mapStateToProps = ({ powersData, heroesData }) => ({
 const mapDispatchToProps = dispatch => ({
   getPowers: () => dispatch(getPowersAction()),
   getHeroes: () => dispatch(getHeroesAction()),
+  updateHero: (id, values) => dispatch(updateHeroAction(id, values)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(HeroesList);

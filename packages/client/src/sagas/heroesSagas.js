@@ -6,6 +6,9 @@ import {
   getHeroesError,
   getHeroesRequest,
   getHeroesSuccess,
+  updateHeroError,
+  updateHeroRequest,
+  updateHeroSuccess,
 } from '../actions/actionCreators';
 import * as api from './../api';
 
@@ -30,5 +33,17 @@ export function * getHeroesSaga () {
     yield put(getHeroesSuccess(data));
   } catch (err) {
     yield put(getHeroesError(err));
+  }
+}
+
+export function * updateHeroSaga (values) {
+  yield put(updateHeroRequest());
+  try {
+    const {
+      data: { data },
+    } = yield api.updateHero(values);
+    yield put(updateHeroSuccess(data));
+  } catch (err) {
+    yield put(updateHeroError(err));
   }
 }

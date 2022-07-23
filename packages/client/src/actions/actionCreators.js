@@ -54,3 +54,23 @@ export const getHeroesError = err => ({
   type: ACTION_TYPES.GET_HEROES_ERROR,
   err,
 });
+
+export const updateHeroAction = (id, values) => ({
+  type: ACTION_TYPES.UPDATE_HERO_ACTION,
+  id,
+  values,
+});
+
+export const updateHeroRequest = () => ({
+  type: ACTION_TYPES.UPDATE_HERO_REQUEST,
+});
+
+export const updateHeroSuccess = data => ({
+  type: ACTION_TYPES.UPDATE_HERO_SUCCESS,
+  data,
+});
+
+export const updateHeroError = err => ({
+  type: ACTION_TYPES.UPDATE_HERO_ERROR,
+  err,
+});

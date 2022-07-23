@@ -12,3 +12,6 @@ export const getHeroes = () => http.get('/heroes');
 //    data (text) => (multer) => req.body
 //    data (file) => (multer) => req.file
 export const createHero = data => http.post('/heroes', data);
+
+export const updateHero = ({ id, values }) =>
+  http.patch(`/heroes/${id}`, values);

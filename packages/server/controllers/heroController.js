@@ -1,4 +1,5 @@
 const _ = require('lodash');
+const createError = require('http-errors');
 const { Hero, Power, sequelize } = require('./../models');
 
 module.exports.createHero = async (req, res, next) => {
@@ -68,7 +69,27 @@ module.exports.getHeroById = async (req, res, next) => {
 };
 
 module.exports.updateHero = async (req, res, next) => {
-  res.status(501).send('Not Implemented');
+  const {
+    body,
+    params: { heroId },
+  } = req;
+
+  try {
+    const [updatedHeroCount, [updatedHero]] = await Hero.update(body, {
+      where: {
+        id: heroId,
+      },
+      raw: true,
+      returning: true,
+    });
+
+    if (updatedHeroCount) {
+      return res.status(200).send({ data: updatedHero });
+    }
+    next(createError(404, 'Hero Not Found'));
+  } catch (err) {
+    next(err);
+  }
 };
 
 module.exports.deleteHero = async (req, res, next) => {
